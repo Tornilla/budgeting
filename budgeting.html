@@ -1,0 +1,119 @@
+<html lang="en">
+    <head>
+        <title>budgets</title>
+        <link rel="stylesheet" type="text/css" href="budgeting.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <div>
+            <input type="number" name="salary" id="salary" placeholder="salary"></input>
+        </div>
+
+        <button id="addexpense">add expenses</button>
+
+        <div id="budgetModal" class="modal" style="display: none;">
+            <div id="budget-container">
+                <span class="close" id="closeModal">&times;</span>
+                <h2>Add expenses</h2>
+                <p>add expenses na to</p>
+                <form>
+                    <input type="text" name="description" id="description" placeholder="expense name">
+                    <input type="number" name="budget" id="budget" placeholder="peso">
+                    <!--<input type="number" name="percentage" id="percentage" placeholder="Enter percentage">-->
+                    <button onclick="submitexpense()" type="button">add expense</button>
+                </form>
+                <script>
+                    var totalbudget = 0;
+                    function submitexpense(){
+                        var desc = document.getElementById("description");
+                        var description = desc.value;
+                        var budget = document.getElementById("budget");
+                        var budgetval = budget.value; 
+                        //var budgetPercent = document.getElementById("percentage");
+                        //var budgetPercentage = budgetPercent.value;
+                        //var maxpercent = 100;
+                        //console.log(description);
+                        // console.log(budget);
+                        //console.log(budgetPercentage);
+
+                        /*if(budgetPercentage>100){
+                            alert("maximum percent is 100!");
+                        }*/
+                        totalbudget = parseFloat(totalbudget) + parseFloat(budgetval);
+                        //totalbudget += budgetval;
+                        var output = description + " " + totalbudget;
+                        var outputDiv = document.createElement("div");
+                        outputDiv.innerHTML=output;
+                        document.getElementById("budgetsOutput").appendChild(outputDiv);
+                        document.getElementById("description").value="";
+                        document.getElementById("budget").value="";
+                        //document.getElementById("percentage").value="";
+                        console.log(totalbudget);
+                    }
+                </script>
+            </div>
+        </div>
+        <script>
+            var addbudget = document.getElementById("addexpense");
+            var budget = document.getElementById("budgetModal");
+            var closeModal = document.getElementById("closeModal");
+
+            addbudget.addEventListener("click", function(){
+                budgetModal.style.display="block";
+            });
+
+            closeModal.addEventListener("click", function(){
+                budgetModal.style.display="none";
+            });
+
+            window.addEventListener("click", function(){
+                if (event.target === budget){
+                    budgetModal.style.display="none";
+                }
+            });
+        </script>
+        <hr> 
+        <div id="budgets">
+            <h1>budgets</h1>
+            <div id="budgetsOutput">
+
+            </div>
+            <button onclick="compute()" type="button">compute</button>
+            <!--<button onclick="reset()" type="">restart budget</button>-->
+            <script>
+                function reset(){
+                    document.getElementById("budgetsOutput").innerHTML = "";
+                }
+                
+                function compute(){
+                    //var summary = budgetPercentage / 100;
+                    //var summary = salary / summary;
+                    var getsalary = document.getElementById("salary");
+                    var salary = getsalary.value;
+                    //var totalbudget = document.getElementById("budget");
+                    //var totbudget = totalbudget;
+                    var summary = salary - totalbudget;
+                    var outputsum = document.createElement("div");
+                    outputsum.innerHTML=summary;
+                    document.getElementById("summary").appendChild(outputsum);
+                    console.log(salary);
+                    console.log(totalbudget);
+                    console.log(summary);
+                    console.log(outputsum);
+                }
+            </script>
+        </div>
+
+        <div id="computed">
+            <h1>summary</h1>
+            <div id="summary">
+
+            </div>
+        </div>
+    </body>
+
+
+
+</html>
